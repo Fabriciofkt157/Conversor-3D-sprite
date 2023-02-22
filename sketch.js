@@ -1,31 +1,50 @@
-function setup (){
-  createCanvas(screenX, screenY);
-  frameRate(30);
-}
-var screenX = window.screen.width, screenY = window.screen.height
+// variáveis para o modelo 3D e sua textura
+let modelo;
+let textura;
 
-
-var yJ = screenY / 2 - screenY * 0.15
-var yC = yJ
-function draw (){
-  background(0);
-  rect(screenX * 0.03, yJ, screenX * 0.03, screenY * 0.30);
-  rect(screenX * 0.97, yC, screenX * 0.03, screenY * 0.30);
-  CPU();
-  
+function preload() {
+  // carregar o modelo e a textura
+  modelo = loadModel('modelo.obj', true);
+  textura = loadImage('textura.png');
 }
 
-function CPU () {
-  
+function setup() {
+  // criar um canvas usando WebGL
+  createCanvas(800, 600, WEBGL);
 
+  // definir a textura do modelo
+  texture(textura);
+
+  // ativar a função orbitControl() para movimentar a câmera
+  orbitControl();
 }
 
-function mouseClicked (){
-  if(mouseY < screenY / 2){
-    yJ += 5
+function draw() {
+  // definir a cor de fundo
+  background(200);
+
+  // posicionar o modelo 3D na origem
+  translate(0, 0, 0);
+
+  // desenhar o modelo 3D com a textura
+  model(modelo);
+
+  // verificar se a tecla "s" foi pressionada
+  if (keyIsPressed && key === 's') {
+    // salvar o frame atual como um arquivo PNG
+    saveCanvas('imagem', 'png');
+
+    // exibir uma mensagem no console
+    console.log('Imagem salva!');
   }
-  else {
-    yJ -= 5
+
+  // verificar se a tecla "r" foi pressionada
+  if (keyIsPressed && key === 'r') {
+    // obter a nova resolução digitada pelo usuário
+    let newResolution = parseInt(prompt('Digite a nova resolução:'));
+
+    // redimensionar o canvas para a nova resolução
+    resizeCanvas(newResolution, newResolution * (height / width));
   }
 }
 
