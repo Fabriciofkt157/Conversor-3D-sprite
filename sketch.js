@@ -5,7 +5,7 @@ let textura;
 function preload() {
   // carregar o modelo e a textura
   modelo = loadModel('modelo.obj', true);
-  textura = loadImage('texture.png');
+  textura = loadImage('textura.png');
 }
 
 function setup() {
